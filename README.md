@@ -1,5 +1,5 @@
 # LLM Gateway downloads
 
-Download page: https://get.orionsoft.cc
+Download page: https://llmgateway.orionsoft.cc
 
 Powered by Orion.
