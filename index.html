@@ -146,10 +146,13 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   /* ---------- About Orion: the "Powered by Orion" footer button and the About panel it opens.
      Required in every Orion app (ORION-DESIGN.md §2a). The panel is always Night, whatever the app's mode. */
   footer.orion-foot { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; padding: 36px 0 8px; text-align: center; }
-  .powered { display: inline-flex; align-items: center; gap: 9px; margin: 0 auto; padding: 7px 14px 7px 9px; border-radius: 99px; border: 1px solid transparent;
+  .powered { display: inline-flex; flex-wrap: nowrap; white-space: nowrap; align-items: center; gap: 10px; margin: 0 auto; padding: 6px 16px 6px 8px; border-radius: 99px; border: 1px solid transparent;
              background: none; cursor: pointer; color: var(--muted); font: 9.5px var(--mono); letter-spacing: .26em; text-transform: uppercase;
              transition: color .2s, border-color .2s, background-color .2s; }
-  .powered svg { width: 20px; height: 20px; color: var(--text-2); flex: none; }
+  .powered svg { width: 34px; height: 34px; color: var(--text); flex: none; }
+  .powered svg line { opacity: .6; stroke-width: 1.4; }  /* small size: bolder lines so the constellation reads clearly */
+  .powered svg circle { transform-box: fill-box; transform-origin: center; transform: scale(1.7); }  /* and bigger stars */
+  .powered > span { white-space: nowrap; }
   .powered b { font: 700 9.5px var(--brand); letter-spacing: .4em; color: var(--text-2); margin-right: -.4em; }
   .powered:hover, .powered:focus-visible { color: var(--text); border-color: color-mix(in srgb, var(--rigel) 40%, transparent); background: var(--accent-wash); }
   .powered:hover b { color: var(--text); }
@@ -176,9 +179,8 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   @keyframes od-in { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
   @keyframes od-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .od-inner { padding: 30px 26px 22px; text-align: center; background: radial-gradient(120% 70% at 50% 0%, rgba(122, 162, 255, .16), transparent 70%); }
-  .od-mark svg { width: 128px; height: 128px; color: #fff; filter: drop-shadow(0 0 14px rgba(140, 185, 255, .35)); }
-  .od-word { font: 700 24px/1.2 var(--brand); letter-spacing: .5em; padding-left: .5em; margin-top: 10px; opacity: 0; animation: od-rise .6s .9s ease forwards; }
-  .od-line { margin: 6px 0 0; font-size: 14px; color: #a8a8af; opacity: 0; animation: od-rise .6s 1.05s ease forwards; }
+  .od-mark svg { width: 168px; height: 168px; color: #fff; filter: drop-shadow(0 0 14px rgba(140, 185, 255, .35)); }
+  .od-word { font: 700 26px/1.2 var(--brand); letter-spacing: .5em; padding-left: .5em; margin-top: 12px; opacity: 0; animation: od-rise .6s .9s ease forwards; }
   .od-product, .od-links, .od-copy, .od-close { opacity: 0; animation: od-rise .6s 1.2s ease forwards; }
   .od-product { margin-top: 22px; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .09); background: rgba(255, 255, 255, .03); text-align: left; }
   .od-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
@@ -303,7 +305,6 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   <div class="od-inner">
     <div class="od-mark" data-mark><svg class="orion draw" viewBox="-4 -4 108 108" aria-hidden="true"><line x1="24" y1="20" x2="48" y2="8" style="animation-delay:0.05s"/><line x1="48" y1="8" x2="72" y2="24" style="animation-delay:0.12s"/><line x1="24" y1="20" x2="42" y2="56" style="animation-delay:0.19s"/><line x1="72" y1="24" x2="58" y2="50" style="animation-delay:0.26s"/><line x1="42" y1="56" x2="50" y2="53" style="animation-delay:0.33s"/><line x1="50" y1="53" x2="58" y2="50" style="animation-delay:0.40s"/><line x1="42" y1="56" x2="30" y2="88" style="animation-delay:0.47s"/><line x1="58" y1="50" x2="76" y2="84" style="animation-delay:0.54s"/><circle class="glow" cx="48" cy="8" r="3.8" style="animation-delay:0.35s"/><circle cx="48" cy="8" r="1.6" style="animation-delay:0.35s"/><circle class="glow betelgeuse" cx="24" cy="20" r="8.2" style="animation-delay:0.41s"/><circle class="betelgeuse" cx="24" cy="20" r="3.4" style="animation-delay:0.41s"/><circle class="glow" cx="72" cy="24" r="5.8" style="animation-delay:0.47s"/><circle cx="72" cy="24" r="2.4" style="animation-delay:0.47s"/><circle class="glow" cx="58" cy="50" r="4.8" style="animation-delay:0.53s"/><circle cx="58" cy="50" r="2" style="animation-delay:0.53s"/><circle class="glow" cx="50" cy="53" r="5.3" style="animation-delay:0.59s"/><circle cx="50" cy="53" r="2.2" style="animation-delay:0.59s"/><circle class="glow" cx="42" cy="56" r="5.0" style="animation-delay:0.65s"/><circle cx="42" cy="56" r="2.1" style="animation-delay:0.65s"/><circle class="glow" cx="30" cy="88" r="5.5" style="animation-delay:0.71s"/><circle cx="30" cy="88" r="2.3" style="animation-delay:0.71s"/><circle class="glow rigel" cx="76" cy="84" r="7.4" style="animation-delay:0.77s"/><circle class="rigel" cx="76" cy="84" r="3.1" style="animation-delay:0.77s"/></svg></div>
     <div class="od-word" id="od-word">ORION</div>
-    <p class="od-line">LLM Gateway is part of the Orion line of software.</p>
     <div class="od-product">
       <div class="od-logo"><img src="icon.png" alt=""><span>LLM Gateway</span></div>
       <dl class="od-facts">
