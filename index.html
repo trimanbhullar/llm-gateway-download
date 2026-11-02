@@ -193,6 +193,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   .od-facts a { color: #7aa2ff; }
   .od-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
   .od-links:empty { display: none; }
+  .orion-dlg nav.od-links { position: static; padding: 0; border: 0; background: none; overflow: visible; margin-left: 0; margin-right: 0; }  /* immune to the host page's nav styles */
   .od-links a { font: 500 13px var(--body); color: #ececee; text-decoration: none; padding: 7px 14px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, .15);
                 transition: background-color .2s, border-color .2s; }
   .od-links a:hover { background: rgba(122, 162, 255, .12); border-color: rgba(122, 162, 255, .5); }
