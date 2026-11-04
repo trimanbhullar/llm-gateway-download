@@ -168,9 +168,10 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .field[hidden] { display: none; }
 .field input { flex: 1 1 220px; min-height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font: 15px var(--body); }
 .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
-.note { margin: 0; min-height: 1.2em; font-size: 14px; color: var(--text-2); }
-.note.err { color: var(--warning); }
-.note.ok { color: var(--good); }
+.status { margin: 0; font-size: 14px; color: var(--text-2); }
+.status:empty { display: none; }
+.status.err { color: var(--warning); }
+.status.ok { color: var(--good); }
 .ts { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-size: 14px; text-decoration: none; }
 .ts:hover { color: var(--text); }
 .ts-mark { width: 18px; height: 18px; flex: none; color: var(--text); }
@@ -367,14 +368,14 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
           <li>You also need a Tailscale account, for the secure connection</li>
         </ul>
         <button class="btn primary" type="button" id="buy">Buy LLM Gateway</button>
-        <p class="note" id="buy-note" role="status"></p>
+        <p class="status" id="buy-note" role="status"></p>
       </div>
       <form class="card access-card" id="access" novalidate>
         <h3>Already have access?</h3>
         <p class="req">If you bought it, or you've been invited to download it free, confirm your email and your downloads open.</p>
         <div class="field" id="f-email"><input type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Email address" required><button class="btn" type="submit">Send code</button></div>
         <div class="field" id="f-code" hidden><input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code" aria-label="6-digit code"><button class="btn primary" type="submit">Open downloads</button></div>
-        <p class="note" id="access-note" role="status"></p>
+        <p class="status" id="access-note" role="status"></p>
       </form>
     </div>
     <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
@@ -535,16 +536,16 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     document.head.append(js);
   });
   const paid = async (result) => {
-    buyNote.className = "note"; buyNote.textContent = "Confirming your payment…";
+    buyNote.className = "status"; buyNote.textContent = "Confirming your payment…";
     try {
       openDownloads(await post("/api/store/claim", result));
-      buyNote.className = "note ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email.";
+      buyNote.className = "status ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email.";
       ready.scrollIntoView({ block: "center" });
-    } catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; }
+    } catch (err) { buyNote.className = "status err"; buyNote.textContent = err.message; }
     buy.disabled = false;
   };
   buy.onclick = async () => {
-    buy.disabled = true; buyNote.className = "note"; buyNote.textContent = "Opening secure checkout…";
+    buy.disabled = true; buyNote.className = "status"; buyNote.textContent = "Opening secure checkout…";
     try {
       const o = await post("/api/store/checkout", {});
       await loadCheckout();
@@ -554,7 +555,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         modal: { ondismiss: () => { buy.disabled = false; buyNote.textContent = ""; } },
       }).open();
       buyNote.textContent = "";
-    } catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; buy.disabled = false; }
+    } catch (err) { buyNote.className = "status err"; buyNote.textContent = err.message; buy.disabled = false; }
   };
 
   const form = document.getElementById("access"), note = document.getElementById("access-note");
@@ -562,7 +563,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   form.onsubmit = async (e) => {
     e.preventDefault();
     const btn = (fCode.hidden ? fEmail : fCode).querySelector("button");
-    btn.disabled = true; note.className = "note"; note.textContent = "";
+    btn.disabled = true; note.className = "status"; note.textContent = "";
     try {
       if (fCode.hidden) {
         const r = await post("/api/store/code", { email: form.email.value });
@@ -570,10 +571,10 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         note.textContent = r.message;
       } else {
         openDownloads(await post("/api/store/verify", { email: form.email.value, code: form.code.value }));
-        note.className = "note ok"; note.textContent = "Confirmed. Your downloads are open below.";
+        note.className = "status ok"; note.textContent = "Confirmed. Your downloads are open below.";
         ready.scrollIntoView({ behavior: "smooth", block: "center" });
       }
-    } catch (err) { note.className = "note err"; note.textContent = err.message; }
+    } catch (err) { note.className = "status err"; note.textContent = err.message; }
     finally { btn.disabled = false; }
   };
 
