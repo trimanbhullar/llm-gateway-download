@@ -171,6 +171,12 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .note { margin: 0; min-height: 1.2em; font-size: 14px; color: var(--text-2); }
 .note.err { color: var(--warning); }
 .note.ok { color: var(--good); }
+.ts { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-size: 14px; text-decoration: none; }
+.ts:hover { color: var(--text); }
+.ts-mark { width: 18px; height: 18px; flex: none; color: var(--text); }
+.ts b { color: var(--text); font-weight: 600; }
+.hero .ts { margin-top: 14px; }
+.tm { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }
 .ready { margin-top: 16px; }
 .ready-h { margin: 0 0 12px; color: var(--good); font-weight: 600; }
 @media (max-width: 760px) { .buy { grid-template-columns: 1fr; } }
@@ -294,7 +300,8 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Get LLM Gateway</span></a>
         <a class="btn" href="#setup">How it works</a>
       </div>
-      <div class="meta" id="hero-meta">$100 one-time · Windows and Mac · <span class="ver">latest version</span></div>
+      <div class="meta" id="hero-meta">$30 one-time · Windows and Mac · <span class="ver">latest version</span></div>
+      <a class="ts" href="https://tailscale.com" target="_blank" rel="noopener"><svg class="ts-mark" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="14" cy="3.5" r="3.5" opacity=".4"/><circle cx="24.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="3.5" cy="14" r="3.5"/><circle cx="14" cy="14" r="3.5"/><circle cx="24.5" cy="14" r="3.5"/><circle cx="3.5" cy="24.5" r="3.5" opacity=".4"/><circle cx="14" cy="24.5" r="3.5"/><circle cx="24.5" cy="24.5" r="3.5" opacity=".4"/></svg><span>Powered by <b>Tailscale</b></span></a>
     </div>
     <div class="art" aria-hidden="true">
       <svg viewBox="0 0 400 400">
@@ -348,11 +355,12 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     <h2>One price, both computers</h2>
     <div class="grid buy">
       <div class="card price-card">
-        <div class="price"><b>$100</b><span>one-time, USD</span></div>
+        <div class="price"><b>$30</b><span>one-time, USD</span></div>
         <ul class="incl">
           <li>Windows and Mac downloads</li>
           <li>Every future update included</li>
           <li>Secure checkout by Stripe</li>
+          <li>You also need a Tailscale account, for the secure connection</li>
         </ul>
         <button class="btn primary" type="button" id="buy">Buy LLM Gateway</button>
         <p class="note" id="buy-note" role="status"></p>
@@ -365,6 +373,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         <p class="note" id="access-note" role="status"></p>
       </form>
     </div>
+    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it. Tailscale is a registered trademark of Tailscale Inc. LLM Gateway is an independent product from Orion Studio.</p>
     <div class="ready" id="ready" hidden>
       <p class="ready-h">Your downloads are ready. The links work for 24 hours.</p>
       <div class="grid">
@@ -397,7 +406,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
           <li><span><b>Put it anywhere and double-click it.</b> It keeps its settings in a folder next to itself, so a USB stick works too.</span></li>
           <li><span>If Windows shows <b>“Windows protected your PC”</b>, click <b>More info</b>, then <b>Run anyway</b>.</span></li>
           <li><span>The dashboard opens in your browser and installs <b>Ollama</b> (runs the models) and <b>Tailscale</b> (the secure address) by itself. Click <b>Yes</b> if Windows asks for permission.</span></li>
-          <li><span><b>Sign in to Tailscale</b> on the page that opens. Then pick your models on the <b>Models</b> tab and create a key for each person on the <b>API keys</b> tab.</span></li>
+          <li><span><b>Sign in to Tailscale</b> on the page that opens (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). Then pick your models on the <b>Models</b> tab and create a key for each person on the <b>API keys</b> tab.</span></li>
         </ol>
       </div>
       <div id="steps-mac" role="tabpanel" hidden>
