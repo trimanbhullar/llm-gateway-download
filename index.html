@@ -359,7 +359,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         <ul class="incl">
           <li>Windows and Mac downloads</li>
           <li>Every future update included</li>
-          <li>Secure checkout by Stripe</li>
+          <li>Secure checkout by Razorpay</li>
           <li>You also need a Tailscale account, for the secure connection</li>
         </ul>
         <button class="btn primary" type="button" id="buy">Buy LLM Gateway</button>
@@ -516,21 +516,35 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   try { openDownloads(JSON.parse(localStorage.getItem("llmg-pass") || "null")); } catch (e) {}
 
   const buy = document.getElementById("buy"), buyNote = document.getElementById("buy-note");
+  const loadCheckout = () => window.Razorpay ? Promise.resolve() : new Promise((done, fail) => {
+    const js = document.createElement("script");
+    js.src = "https://checkout.razorpay.com/v1/checkout.js";
+    js.onload = done;
+    js.onerror = () => fail(new Error("The payment window couldn't load. Please try again."));
+    document.head.append(js);
+  });
+  const paid = async (result) => {
+    buyNote.className = "note"; buyNote.textContent = "Confirming your payment…";
+    try {
+      openDownloads(await post("/api/store/claim", result));
+      buyNote.className = "note ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email.";
+      ready.scrollIntoView({ block: "center" });
+    } catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; }
+    buy.disabled = false;
+  };
   buy.onclick = async () => {
     buy.disabled = true; buyNote.className = "note"; buyNote.textContent = "Opening secure checkout…";
-    try { location.href = (await post("/api/store/checkout", {})).url; }
-    catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; buy.disabled = false; }
+    try {
+      const o = await post("/api/store/checkout", {});
+      await loadCheckout();
+      new window.Razorpay({
+        key: o.keyId, order_id: o.orderId, amount: o.amount, currency: o.currency, name: o.name, description: o.description,
+        theme: { color: "#7aa2ff" }, handler: paid,
+        modal: { ondismiss: () => { buy.disabled = false; buyNote.textContent = ""; } },
+      }).open();
+      buyNote.textContent = "";
+    } catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; buy.disabled = false; }
   };
-
-  // Back from Stripe with ?paid=<session>: claim the downloads, then tidy the address bar
-  const paid = new URLSearchParams(location.search).get("paid");
-  if (paid) {
-    buyNote.textContent = "Confirming your payment…";
-    post("/api/store/claim", { session: paid })
-      .then(pass => { openDownloads(pass); buyNote.className = "note ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email."; ready.scrollIntoView({ block: "center" }); })
-      .catch(err => { buyNote.className = "note err"; buyNote.textContent = err.message; })
-      .finally(() => history.replaceState(null, "", location.pathname + "#download"));
-  }
 
   const form = document.getElementById("access"), note = document.getElementById("access-note");
   const fEmail = document.getElementById("f-email"), fCode = document.getElementById("f-code");
