@@ -153,6 +153,27 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .mine-tag { display: none; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-wash); border-radius: 99px; padding: 2px 10px; }
 .dl.mine .mine-tag { display: inline-block; }
 .dl .meta { margin: 0; }
+.buy { grid-template-columns: 1.1fr 1fr; align-items: stretch; }
+.price-card, .access-card { display: flex; flex-direction: column; gap: 14px; }
+.price { display: flex; align-items: baseline; gap: 10px; }
+.price b { font: 700 44px/1 var(--brand, var(--body)); letter-spacing: -.02em; }
+.price span { color: var(--text-2); font-size: 15px; }
+.incl { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--text-2); font-size: 15px; }
+.incl li { display: flex; gap: 10px; align-items: center; }
+.incl li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
+.price-card .btn, .access-card .btn { align-self: flex-start; }
+.access-card h3 { font: 600 20px/1.2 var(--body); margin: 0; }
+.access-card .req { margin: 0; color: var(--text-2); font-size: 14px; }
+.field { display: flex; gap: 8px; flex-wrap: wrap; }
+.field[hidden] { display: none; }
+.field input { flex: 1 1 220px; min-height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font: 15px var(--body); }
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+.note { margin: 0; min-height: 1.2em; font-size: 14px; color: var(--text-2); }
+.note.err { color: var(--warning); }
+.note.ok { color: var(--good); }
+.ready { margin-top: 16px; }
+.ready-h { margin: 0 0 12px; color: var(--good); font-weight: 600; }
+@media (max-width: 760px) { .buy { grid-template-columns: 1fr; } }
 
 /* setup: segmented Windows / Mac switch and numbered steps */
 .seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; margin-bottom: 20px; }
@@ -261,7 +282,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     </div>
     <span class="spacer"></span>
     <a class="link" href="#setup">Set it up</a>
-    <a class="link" href="#download">Download</a>
+    <a class="link" href="#download">Get it</a>
     <button class="theme" type="button" id="theme" aria-label="Switch to Day mode"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
   </div>
 
@@ -270,10 +291,10 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
       <h1>Share the AI models on your computer <span>with your team.</span></h1>
       <p class="lead">A private, secure address for everyone you choose. LLM Gateway installs and sets everything up for you.</p>
       <div class="ctas">
-        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Download</span></a>
+        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Get LLM Gateway</span></a>
         <a class="btn" href="#setup">How it works</a>
       </div>
-      <div class="meta" id="hero-meta"><span class="ver">latest version</span></div>
+      <div class="meta" id="hero-meta">$100 one-time · Windows and Mac · <span class="ver">latest version</span></div>
     </div>
     <div class="art" aria-hidden="true">
       <svg viewBox="0 0 400 400">
@@ -323,20 +344,42 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   </div>
 
   <section id="download">
-    <p class="label">Download</p>
-    <h2>Pick your computer</h2>
-    <div class="grid">
-      <div class="card dl" id="dl-win">
-        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zM11.5 4.3 21 3v8.5h-9.5zm0 15.4L21 21v-8.5h-9.5z"/></svg>Windows <span class="mine-tag">Your computer</span></h3>
-        <p class="req">Windows 10 or 11, 64-bit. An NVIDIA graphics card is best.</p>
-        <a class="btn" id="btn-win" href="https://github.com/trimanbhullar/llm-gateway-download/releases/latest/download/LLM-Gateway.exe">Download for Windows</a>
-        <div class="meta">LLM-Gateway.exe · <span class="ver">latest</span></div>
+    <p class="label">Get LLM Gateway</p>
+    <h2>One price, both computers</h2>
+    <div class="grid buy">
+      <div class="card price-card">
+        <div class="price"><b>$100</b><span>one-time, USD</span></div>
+        <ul class="incl">
+          <li>Windows and Mac downloads</li>
+          <li>Every future update included</li>
+          <li>Secure checkout by Stripe</li>
+        </ul>
+        <button class="btn primary" type="button" id="buy">Buy LLM Gateway</button>
+        <p class="note" id="buy-note" role="status"></p>
       </div>
-      <div class="card dl" id="dl-mac">
-        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>Mac <span class="mine-tag">Your computer</span></h3>
-        <p class="req">Apple silicon (M1 or newer), macOS 13 or newer, 16 GB memory or more.</p>
-        <a class="btn" id="btn-mac" href="https://github.com/trimanbhullar/llm-gateway-download/releases/latest/download/LLM-Gateway-Mac.zip">Download for Mac</a>
-        <div class="meta">LLM-Gateway-Mac.zip · <span class="ver">latest</span></div>
+      <form class="card access-card" id="access" novalidate>
+        <h3>Already have access?</h3>
+        <p class="req">If you bought it, or you've been invited to download it free, confirm your email and your downloads open.</p>
+        <div class="field" id="f-email"><input type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Email address" required><button class="btn" type="submit">Send code</button></div>
+        <div class="field" id="f-code" hidden><input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code" aria-label="6-digit code"><button class="btn primary" type="submit">Open downloads</button></div>
+        <p class="note" id="access-note" role="status"></p>
+      </form>
+    </div>
+    <div class="ready" id="ready" hidden>
+      <p class="ready-h">Your downloads are ready. The links work for 24 hours.</p>
+      <div class="grid">
+        <div class="card dl" id="dl-win">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zM11.5 4.3 21 3v8.5h-9.5zm0 15.4L21 21v-8.5h-9.5z"/></svg>Windows <span class="mine-tag">Your computer</span></h3>
+          <p class="req">Windows 10 or 11, 64-bit. An NVIDIA graphics card is best.</p>
+          <a class="btn" id="btn-win" href="#download">Download for Windows</a>
+          <div class="meta">LLM-Gateway.exe · <span class="ver">latest</span></div>
+        </div>
+        <div class="card dl" id="dl-mac">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>Mac <span class="mine-tag">Your computer</span></h3>
+          <p class="req">Apple silicon (M1 or newer), macOS 13 or newer, 16 GB memory or more.</p>
+          <a class="btn" id="btn-mac" href="#download">Download for Mac</a>
+          <div class="meta">LLM-Gateway-Mac.zip · <span class="ver">latest</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -399,7 +442,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         <!-- <div><dt>Customer care</dt><dd><a href="mailto:…">…</a></dd></div> -->
       </dl>
     </div>
-    <nav class="od-links"><a href="#download">Download</a><a href="#setup">Setup guide</a><a href="https://github.com/trimanbhullar/llm-gateway-download/releases" target="_blank" rel="noopener">All releases</a></nav>
+    <nav class="od-links"><a href="#download">Download</a><a href="#setup">Setup guide</a><a href="https://orionsoft.cc" target="_blank" rel="noopener">orionsoft.cc</a></nav>
     <p class="od-copy">© <span data-od-year>2026</span> Triman Bhullar. All rights reserved.</p>
     <button class="od-close" type="button" data-close>Close</button>
   </div>
@@ -411,8 +454,6 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   const mine = /Mac/i.test(plat) || /Macintosh/.test(ua) ? "mac" : /Win/i.test(plat) || /Windows/.test(ua) ? "win" : null;
   if (mine) {
     document.getElementById("dl-" + mine).classList.add("mine");
-    document.getElementById("hero-btn").href = document.getElementById("btn-" + mine).href;
-    document.getElementById("hero-label").textContent = mine === "mac" ? "Download for Mac" : "Download for Windows";
   }
 
   // Hero: a gently wandering tokens/s readout; everything holds still for reduced-motion users
@@ -447,6 +488,61 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   tabs.mac.onclick = () => show("mac");
   if (mine) show(mine);
 
+  // Buying and downloading go through orionsoft.cc (the files are never public). A download pass lasts a day
+  // and is kept on this browser, so a refresh doesn't lose it.
+  const API = /^(localhost|127\.)/.test(location.hostname) ? "http://localhost:8790" : "https://orionsoft.cc";
+  const post = (path, body) => fetch(API + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ product: "llm-gateway", ...body }) })
+    .then(r => r.json().catch(() => ({})).then(d => { if (!r.ok) throw new Error(d.error || "Something went wrong. Please try again."); return d; }));
+  const ready = document.getElementById("ready");
+  const openDownloads = (pass) => {
+    if (!pass || !pass.files || Date.parse(pass.expires) < Date.now()) return false;
+    document.getElementById("btn-win").href = pass.files.windows;
+    document.getElementById("btn-mac").href = pass.files.mac;
+    ready.hidden = false;
+    document.getElementById("hero-btn").href = "#ready";
+    document.getElementById("hero-label").textContent = "Your downloads";
+    try { localStorage.setItem("llmg-pass", JSON.stringify(pass)); } catch (e) {}
+    return true;
+  };
+  try { openDownloads(JSON.parse(localStorage.getItem("llmg-pass") || "null")); } catch (e) {}
+
+  const buy = document.getElementById("buy"), buyNote = document.getElementById("buy-note");
+  buy.onclick = async () => {
+    buy.disabled = true; buyNote.className = "note"; buyNote.textContent = "Opening secure checkout…";
+    try { location.href = (await post("/api/store/checkout", {})).url; }
+    catch (err) { buyNote.className = "note err"; buyNote.textContent = err.message; buy.disabled = false; }
+  };
+
+  // Back from Stripe with ?paid=<session>: claim the downloads, then tidy the address bar
+  const paid = new URLSearchParams(location.search).get("paid");
+  if (paid) {
+    buyNote.textContent = "Confirming your payment…";
+    post("/api/store/claim", { session: paid })
+      .then(pass => { openDownloads(pass); buyNote.className = "note ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email."; ready.scrollIntoView({ block: "center" }); })
+      .catch(err => { buyNote.className = "note err"; buyNote.textContent = err.message; })
+      .finally(() => history.replaceState(null, "", location.pathname + "#download"));
+  }
+
+  const form = document.getElementById("access"), note = document.getElementById("access-note");
+  const fEmail = document.getElementById("f-email"), fCode = document.getElementById("f-code");
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = (fCode.hidden ? fEmail : fCode).querySelector("button");
+    btn.disabled = true; note.className = "note"; note.textContent = "";
+    try {
+      if (fCode.hidden) {
+        const r = await post("/api/store/code", { email: form.email.value });
+        fCode.hidden = false; form.email.readOnly = true; form.code.focus();
+        note.textContent = r.message;
+      } else {
+        openDownloads(await post("/api/store/verify", { email: form.email.value, code: form.code.value }));
+        note.className = "note ok"; note.textContent = "Confirmed. Your downloads are open below.";
+        ready.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    } catch (err) { note.className = "note err"; note.textContent = err.message; }
+    finally { btn.disabled = false; }
+  };
+
   // Current version from the public release
   fetch("https://api.github.com/repos/trimanbhullar/llm-gateway-download/releases/latest")
     .then(r => r.ok ? r.json() : null)
@@ -476,5 +572,6 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   });
 })();
 </script>
+<script defer src="https://orionsoft.cc/beacon.js" data-site="llm-gateway"></script>
 </body>
 </html>
