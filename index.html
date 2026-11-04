@@ -177,6 +177,10 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .ts b { color: var(--text); font-weight: 600; }
 .hero .ts { margin-top: 14px; }
 .tm { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }
+.od-credits { margin-top: 16px; text-align: left; font-size: 12.5px; color: #a8a8af; opacity: 0; animation: od-rise .6s 1.2s ease forwards; }
+.od-credits h3 { margin: 0 0 6px; font: 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #84848b; }
+.od-credits ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.od-credits b { color: #ececee; font-weight: 600; }
 .ready { margin-top: 16px; }
 .ready-h { margin: 0 0 12px; color: var(--good); font-weight: 600; }
 @media (max-width: 760px) { .buy { grid-template-columns: 1fr; } }
@@ -373,7 +377,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         <p class="note" id="access-note" role="status"></p>
       </form>
     </div>
-    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it. Tailscale is a registered trademark of Tailscale Inc. LLM Gateway is an independent product from Orion Studio.</p>
+    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
     <div class="ready" id="ready" hidden>
       <p class="ready-h">Your downloads are ready. The links work for 24 hours.</p>
       <div class="grid">
@@ -452,6 +456,13 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
       </dl>
     </div>
     <nav class="od-links"><a href="#download">Download</a><a href="#setup">Setup guide</a><a href="https://orionsoft.cc" target="_blank" rel="noopener">orionsoft.cc</a></nav>
+    <div class="od-credits">
+      <h3>Credits</h3>
+      <ul>
+        <li><b>Secure connection</b> Tailscale. Tailscale is a registered trademark of Tailscale Inc.; LLM Gateway is an independent product.</li>
+        <li><b>Models</b> served with Ollama and vLLM</li>
+      </ul>
+    </div>
     <p class="od-copy">© <span data-od-year>2026</span> Triman Bhullar. All rights reserved.</p>
     <button class="od-close" type="button" data-close>Close</button>
   </div>
