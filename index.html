@@ -153,25 +153,6 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .mine-tag { display: none; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-wash); border-radius: 99px; padding: 2px 10px; }
 .dl.mine .mine-tag { display: inline-block; }
 .dl .meta { margin: 0; }
-.buy { grid-template-columns: 1.1fr 1fr; align-items: stretch; }
-.price-card, .access-card { display: flex; flex-direction: column; gap: 14px; }
-.price { display: flex; align-items: baseline; gap: 10px; }
-.price b { font: 700 44px/1 var(--brand, var(--body)); letter-spacing: -.02em; }
-.price span { color: var(--text-2); font-size: 15px; }
-.incl { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--text-2); font-size: 15px; }
-.incl li { display: flex; gap: 10px; align-items: center; }
-.incl li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
-.price-card .btn, .access-card .btn { align-self: flex-start; }
-.access-card h3 { font: 600 20px/1.2 var(--body); margin: 0; }
-.access-card .req { margin: 0; color: var(--text-2); font-size: 14px; }
-.field { display: flex; gap: 8px; flex-wrap: wrap; }
-.field[hidden] { display: none; }
-.field input { flex: 1 1 220px; min-height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font: 15px var(--body); }
-.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
-.status { margin: 0; font-size: 14px; color: var(--text-2); }
-.status:empty { display: none; }
-.status.err { color: var(--warning); }
-.status.ok { color: var(--good); }
 .ts { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-size: 14px; text-decoration: none; }
 .ts:hover { color: var(--text); }
 .ts-mark { width: 18px; height: 18px; flex: none; color: var(--text); }
@@ -182,9 +163,7 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .od-credits h3 { margin: 0 0 6px; font: 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #84848b; }
 .od-credits ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .od-credits b { color: #ececee; font-weight: 600; }
-.ready { margin-top: 16px; }
-.ready-h { margin: 0 0 12px; color: var(--good); font-weight: 600; }
-@media (max-width: 760px) { .buy { grid-template-columns: 1fr; } }
+.free-h { margin: 0 0 16px; color: var(--text-2); font-size: 15px; }
 
 /* setup: segmented Windows / Mac switch and numbered steps */
 .seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; margin-bottom: 20px; }
@@ -302,10 +281,10 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
       <h1>Share the AI models on your computer <span>with your team.</span></h1>
       <p class="lead">A private, secure address for everyone you choose. LLM Gateway installs and sets everything up for you.</p>
       <div class="ctas">
-        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Get LLM Gateway</span></a>
+        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Download free</span></a>
         <a class="btn" href="#setup">How it works</a>
       </div>
-      <div class="meta" id="hero-meta">$30 one-time · Windows and Mac · <span class="ver">latest version</span></div>
+      <div class="meta" id="hero-meta">Free · Windows and Mac · <span class="ver">latest version</span></div>
       <a class="ts" href="https://tailscale.com" target="_blank" rel="noopener"><svg class="ts-mark" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="14" cy="3.5" r="3.5" opacity=".4"/><circle cx="24.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="3.5" cy="14" r="3.5"/><circle cx="14" cy="14" r="3.5"/><circle cx="24.5" cy="14" r="3.5"/><circle cx="3.5" cy="24.5" r="3.5" opacity=".4"/><circle cx="14" cy="24.5" r="3.5"/><circle cx="24.5" cy="24.5" r="3.5" opacity=".4"/></svg><span>Powered by <b>Tailscale</b></span></a>
     </div>
     <div class="art" aria-hidden="true">
@@ -357,45 +336,25 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
 
   <section id="download">
     <p class="label">Get LLM Gateway</p>
-    <h2>One price, both computers</h2>
-    <div class="grid buy">
-      <div class="card price-card">
-        <div class="price"><b>$30</b><span>one-time, USD</span></div>
-        <ul class="incl">
-          <li>Windows and Mac downloads</li>
-          <li>Every future update included</li>
-          <li>Secure checkout by Razorpay</li>
-          <li>You also need a Tailscale account, for the secure connection</li>
-        </ul>
-        <button class="btn primary" type="button" id="buy">Buy LLM Gateway</button>
-        <p class="status" id="buy-note" role="status"></p>
-      </div>
-      <form class="card access-card" id="access" novalidate>
-        <h3>Already have access?</h3>
-        <p class="req">If you bought it, or you've been invited to download it free, confirm your email and your downloads open.</p>
-        <div class="field" id="f-email"><input type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Email address" required><button class="btn" type="submit">Send code</button></div>
-        <div class="field" id="f-code" hidden><input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code" aria-label="6-digit code"><button class="btn primary" type="submit">Open downloads</button></div>
-        <p class="status" id="access-note" role="status"></p>
-      </form>
-    </div>
-    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
-    <div class="ready" id="ready" hidden>
-      <p class="ready-h">Your downloads are ready. The links work for 24 hours.</p>
+    <h2>Free, for Windows and Mac</h2>
+    <p class="free-h">No account, no sign-up. Every future update is free too.</p>
+    <div>
       <div class="grid">
         <div class="card dl" id="dl-win">
           <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zM11.5 4.3 21 3v8.5h-9.5zm0 15.4L21 21v-8.5h-9.5z"/></svg>Windows <span class="mine-tag">Your computer</span></h3>
           <p class="req">Windows 10 or 11, 64-bit. An NVIDIA graphics card is best.</p>
-          <a class="btn" id="btn-win" href="#download">Download for Windows</a>
+          <a class="btn" id="btn-win" href="https://orionsoft.cc/get/llm-gateway/windows" rel="nofollow">Download for Windows</a>
           <div class="meta">LLM-Gateway.exe · <span class="ver">latest</span></div>
         </div>
         <div class="card dl" id="dl-mac">
           <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>Mac <span class="mine-tag">Your computer</span></h3>
           <p class="req">Apple silicon (M1 or newer), macOS 13 or newer, 16 GB memory or more.</p>
-          <a class="btn" id="btn-mac" href="#download">Download for Mac</a>
+          <a class="btn" id="btn-mac" href="https://orionsoft.cc/get/llm-gateway/mac" rel="nofollow">Download for Mac</a>
           <div class="meta">LLM-Gateway-Mac.zip · <span class="ver">latest</span></div>
         </div>
       </div>
     </div>
+    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
   </section>
 
   <section id="setup">
@@ -509,74 +468,13 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   tabs.mac.onclick = () => show("mac");
   if (mine) show(mine);
 
-  // Buying and downloading go through orionsoft.cc (the files are never public). A download pass lasts a day
-  // and is kept on this browser, so a refresh doesn't lose it.
+  // Downloads come from orionsoft.cc (free, counted there); on this computer, the main button starts its own download
   const API = /^(localhost|127\.)/.test(location.hostname) ? "http://localhost:8790" : "https://orionsoft.cc";
-  const post = (path, body) => fetch(API + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ product: "llm-gateway", ...body }) })
-    .then(r => r.json().catch(() => ({})).then(d => { if (!r.ok) throw new Error(d.error || "Something went wrong. Please try again."); return d; }));
-  const ready = document.getElementById("ready");
-  const openDownloads = (pass) => {
-    if (!pass || !pass.files || Date.parse(pass.expires) < Date.now()) return false;
-    document.getElementById("btn-win").href = pass.files.windows;
-    document.getElementById("btn-mac").href = pass.files.mac;
-    ready.hidden = false;
-    document.getElementById("hero-btn").href = "#ready";
-    document.getElementById("hero-label").textContent = "Your downloads";
-    try { localStorage.setItem("llmg-pass", JSON.stringify(pass)); } catch (e) {}
-    return true;
-  };
-  try { openDownloads(JSON.parse(localStorage.getItem("llmg-pass") || "null")); } catch (e) {}
-
-  const buy = document.getElementById("buy"), buyNote = document.getElementById("buy-note");
-  const loadCheckout = () => window.Razorpay ? Promise.resolve() : new Promise((done, fail) => {
-    const js = document.createElement("script");
-    js.src = "https://checkout.razorpay.com/v1/checkout.js";
-    js.onload = done;
-    js.onerror = () => fail(new Error("The payment window couldn't load. Please try again."));
-    document.head.append(js);
-  });
-  const paid = async (result) => {
-    buyNote.className = "status"; buyNote.textContent = "Confirming your payment…";
-    try {
-      openDownloads(await post("/api/store/claim", result));
-      buyNote.className = "status ok"; buyNote.textContent = "Thank you! Your downloads are open below. You can get them again any time with your email.";
-      ready.scrollIntoView({ block: "center" });
-    } catch (err) { buyNote.className = "status err"; buyNote.textContent = err.message; }
-    buy.disabled = false;
-  };
-  buy.onclick = async () => {
-    buy.disabled = true; buyNote.className = "status"; buyNote.textContent = "Opening secure checkout…";
-    try {
-      const o = await post("/api/store/checkout", {});
-      await loadCheckout();
-      new window.Razorpay({
-        key: o.keyId, order_id: o.orderId, amount: o.amount, currency: o.currency, name: o.name, description: o.description,
-        theme: { color: "#7aa2ff" }, handler: paid,
-        modal: { ondismiss: () => { buy.disabled = false; buyNote.textContent = ""; } },
-      }).open();
-      buyNote.textContent = "";
-    } catch (err) { buyNote.className = "status err"; buyNote.textContent = err.message; buy.disabled = false; }
-  };
-
-  const form = document.getElementById("access"), note = document.getElementById("access-note");
-  const fEmail = document.getElementById("f-email"), fCode = document.getElementById("f-code");
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    const btn = (fCode.hidden ? fEmail : fCode).querySelector("button");
-    btn.disabled = true; note.className = "status"; note.textContent = "";
-    try {
-      if (fCode.hidden) {
-        const r = await post("/api/store/code", { email: form.email.value });
-        fCode.hidden = false; form.email.readOnly = true; form.code.focus();
-        note.textContent = r.message;
-      } else {
-        openDownloads(await post("/api/store/verify", { email: form.email.value, code: form.code.value }));
-        note.className = "status ok"; note.textContent = "Confirmed. Your downloads are open below.";
-        ready.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    } catch (err) { note.className = "status err"; note.textContent = err.message; }
-    finally { btn.disabled = false; }
-  };
+  for (const [id, os] of [["btn-win", "windows"], ["btn-mac", "mac"]]) document.getElementById(id).href = API + "/get/llm-gateway/" + os;
+  if (mine) {
+    document.getElementById("hero-btn").href = document.getElementById("btn-" + mine).href;
+    document.getElementById("hero-label").textContent = mine === "mac" ? "Download free for Mac" : "Download free for Windows";
+  }
 
   // Current version from the public release
   fetch("https://api.github.com/repos/trimanbhullar/llm-gateway-download/releases/latest")
