@@ -167,8 +167,15 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .kc-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 .btn.small { min-height: 40px; padding: 0 16px; font-size: 14px; }
 .kc-err { margin: 8px 0 0; color: #e5675c; font-size: 13px; }
-#kc-ok { display: flex; gap: 12px; align-items: flex-start; }
 #kc-ok[hidden] { display: none; }
+.kc-head { display: flex; gap: 12px; align-items: flex-start; }
+.kc-head b { font-size: 15px; }
+.kc-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+.kc-btns .btn { flex: 1 1 200px; justify-content: center; }
+.kc-ok-steps { margin-top: 16px; }
+.kc-ok-steps .steps { margin-top: 12px; }
+.kc-ok-steps .steps[hidden] { display: none; }
+.kc-foot { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .kc-tick { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--good); color: #fff; font-weight: 700; }
 #kc-ok code { font: 12.5px var(--mono); color: var(--text); }
 .tm { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }
@@ -176,7 +183,7 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .od-credits h3 { margin: 0 0 6px; font: 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #84848b; }
 .od-credits ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .od-credits b { color: #ececee; font-weight: 600; }
-.free-h { margin: 0 0 16px; color: var(--text-2); font-size: 15px; }
+.lead-h { margin: 0 0 16px; color: var(--text-2); font-size: 15px; }
 
 /* setup: segmented Windows / Mac switch and numbered steps */
 .seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; margin-bottom: 20px; }
@@ -294,10 +301,10 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
       <h1>Share the AI models on your computer <span>with your team.</span></h1>
       <p class="lead">A private, secure address for everyone you choose. LLM Gateway installs and sets everything up for you.</p>
       <div class="ctas">
-        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Download free</span></a>
+        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Download</span></a>
         <a class="btn" href="#setup">How it works</a>
       </div>
-      <div class="meta" id="hero-meta">Free · Windows and Mac · <span class="ver">latest version</span></div>
+      <div class="meta" id="hero-meta">Windows and Mac · <span class="ver">latest version</span></div>
       <a class="ts" href="https://tailscale.com" target="_blank" rel="noopener"><svg class="ts-mark" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="14" cy="3.5" r="3.5" opacity=".4"/><circle cx="24.5" cy="3.5" r="3.5" opacity=".4"/><circle cx="3.5" cy="14" r="3.5"/><circle cx="14" cy="14" r="3.5"/><circle cx="24.5" cy="14" r="3.5"/><circle cx="3.5" cy="24.5" r="3.5" opacity=".4"/><circle cx="14" cy="24.5" r="3.5"/><circle cx="24.5" cy="24.5" r="3.5" opacity=".4"/></svg><span>Powered by <b>Tailscale</b></span></a>
     </div>
     <div class="art" aria-hidden="true">
@@ -349,9 +356,9 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
 
   <section id="download">
     <p class="label">Get LLM Gateway</p>
-    <h2>Free, for Windows and Mac</h2>
-    <p class="free-h">No account, no sign-up. Every future update is free too.</p>
-    <div>
+    <h2>For Windows and Mac</h2>
+    <p class="lead-h">No account or sign-up. It's tested and improved all the time: new versions show up in the app when they're ready.</p>
+    <div id="dl-grid">
       <div class="grid">
         <div class="card dl" id="dl-win">
           <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zM11.5 4.3 21 3v8.5h-9.5zm0 15.4L21 21v-8.5h-9.5z"/></svg>Windows <span class="mine-tag">Your computer</span></h3>
@@ -369,17 +376,41 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     </div>
     <div class="card key-card" id="key-card">
       <div id="kc-closed"><b>Have an access key?</b> <button class="linkbtn" type="button" id="kc-open">Add it</button>
-        <span class="kc-note">It unlocks plugins, and your organisation's look if it has one. No key? Just download: you can add one later.</span></div>
+        <span class="kc-note">It unlocks what your organisation set up for you. No key? Just download: you can add one later.</span></div>
       <form id="kc-form" hidden autocomplete="off">
         <label for="kc-key"><b>Your access key</b></label>
         <div class="kc-row"><input id="kc-key" placeholder="XXXXX-XXXXX-XXXXX-XXXXX" maxlength="29" spellcheck="false" aria-describedby="kc-err">
           <button class="btn small primary" id="kc-add">Add key</button><button class="btn small" type="button" id="kc-skip">Skip</button></div>
         <p class="kc-err" id="kc-err" role="alert" hidden></p>
       </form>
-      <div id="kc-ok" hidden role="status"><span class="kc-tick" aria-hidden="true">✓</span>
-        <div><b>Access key added.</b> <span id="kc-what"></span>
-          <p class="kc-note">Download LLM Gateway above and open it on this computer: it sets itself up with your access. Using another computer? Paste the key in its Settings instead: <code id="kc-show"></code></p>
-          <button class="linkbtn" type="button" id="kc-remove">Remove the key</button></div></div>
+      <div id="kc-ok" hidden>
+        <div class="kc-head" role="status"><span class="kc-tick" aria-hidden="true">✓</span>
+          <div><b>Your access is ready.</b> <span id="kc-what"></span>
+            <span class="kc-note">Download LLM Gateway and open it on this computer: it starts with your access already in.</span></div></div>
+        <div class="kc-btns">
+          <a class="btn" id="kc-win" rel="nofollow" href="https://orionsoft.cc/get/llm-gateway/windows">Download for Windows</a>
+          <a class="btn" id="kc-mac" rel="nofollow" href="https://orionsoft.cc/get/llm-gateway/mac">Download for Mac</a>
+        </div>
+        <div class="kc-ok-steps">
+          <div class="seg" role="tablist">
+            <button role="tab" id="kct-win" aria-selected="true" aria-controls="kcs-win">Windows</button>
+            <button role="tab" id="kct-mac" aria-selected="false" aria-controls="kcs-mac">Mac</button>
+          </div>
+          <ol class="steps" id="kcs-win" role="tabpanel">
+            <li><span><b>Double-click LLM-Gateway.exe.</b> Put it anywhere first: it keeps its settings in a folder next to itself.</span></li>
+            <li><span>If Windows shows <b>“Windows protected your PC”</b>, click <b>More info</b>, then <b>Run anyway</b>.</span></li>
+            <li><span>It opens in your browser with your access in, and installs what it needs by itself<span class="kc-sets"></span>. Click <b>Yes</b> if Windows asks for permission.</span></li>
+            <li><span><b>Sign in to Tailscale</b> when it asks (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). That's it.</span></li>
+          </ol>
+          <ol class="steps" id="kcs-mac" role="tabpanel" hidden>
+            <li><span><b>Unzip it and drag LLM Gateway into Applications.</b></span></li>
+            <li><span>The first time only: <b>right-click</b> the app, choose <b>Open</b>, then <b>Open</b> again. If macOS still blocks it, go to <b>System Settings › Privacy &amp; Security</b> and click <b>Open Anyway</b>.</span></li>
+            <li><span>It opens in your browser with your access in, and installs what it needs by itself<span class="kc-sets"></span>. It lives in the menu bar at the top of the screen.</span></li>
+            <li><span>For <b>Tailscale</b> it opens the download page: install it, open it once, allow its VPN setting and sign in (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). Setup carries on by itself.</span></li>
+          </ol>
+        </div>
+        <p class="kc-note kc-foot">Using another computer? Paste the key in LLM Gateway's Settings there: <code id="kc-show"></code> · <button class="linkbtn" type="button" id="kc-remove">Remove the key</button></p>
+      </div>
     </div>
     <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
   </section>
@@ -495,12 +526,12 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   tabs.mac.onclick = () => show("mac");
   if (mine) show(mine);
 
-  // Downloads come from orionsoft.cc (free, counted there); on this computer, the main button starts its own download
+  // Downloads come from orionsoft.cc (counted there); on this computer, the main button starts its own download
   const API = /^(localhost|127\.)/.test(location.hostname) ? "http://localhost:8790" : "https://orionsoft.cc";
   for (const [id, os] of [["btn-win", "windows"], ["btn-mac", "mac"]]) document.getElementById(id).href = API + "/get/llm-gateway/" + os;
   if (mine) {
     document.getElementById("hero-btn").href = document.getElementById("btn-" + mine).href;
-    document.getElementById("hero-label").textContent = mine === "mac" ? "Download free for Mac" : "Download free for Windows";
+    document.getElementById("hero-label").textContent = mine === "mac" ? "Download for Mac" : "Download for Windows";
   }
 
   // An access key: added here, or filled in by an invite link (#key=…, never sent to a server). It's kept in this
@@ -509,13 +540,22 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   const tidy = (k) => String(k || "").toUpperCase().replace(/[^0-9A-Z]/g, "").replace(/(.{5})(?=.)/g, "$1-");
   const stored = () => { try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; } };
   const keep = (k) => { try { k ? localStorage.setItem(KEY_STORE, k) : localStorage.removeItem(KEY_STORE); } catch (e) {} };
-  const view = (which) => { for (const id of ["kc-closed", "kc-form", "kc-ok"]) $k(id).hidden = id !== which; };
+  const view = (which) => {
+    for (const id of ["kc-closed", "kc-form", "kc-ok"]) $k(id).hidden = id !== which;
+    $k("dl-grid").hidden = $k("setup").hidden = which === "kc-ok";  // the key card has its own download buttons and steps
+  };
+  const and = (xs) => xs.length > 1 ? xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1] : xs[0] || "";
+  const kcTab = (os) => { for (const o of ["win", "mac"]) { $k("kct-" + o).setAttribute("aria-selected", o === os); $k("kcs-" + o).hidden = o !== os; } };
+  $k("kct-win").onclick = () => kcTab("win");
+  $k("kct-mac").onclick = () => kcTab("mac");
+  $k("kc-win").href = API + "/get/llm-gateway/windows";
+  $k("kc-mac").href = API + "/get/llm-gateway/mac";
+  if (mine) { $k("kc-" + mine).classList.add("primary"); kcTab(mine); } else $k("kc-win").classList.add("primary");
   const shown = (k, d) => {
-    const parts = [...(d && d.unlocks || [])];
-    if (d && d.theme) parts.push(d.theme.replace(/(^|-)(\w)/g, (m, a, b) => (a ? " " : "") + b.toUpperCase()) + " branding");
-    const dl = (d && d.downloads) || [];
-    $k("kc-what").textContent = (parts.length ? "It unlocks " + parts.join(" and ") : "")
-      + (dl.length ? (parts.length ? ", and sets up " : "It sets up ") + dl.join(" and ") + " by itself" : "") + (parts.length || dl.length ? "." : "");
+    const has = (d && d.unlocks) || [], dl = (d && d.downloads) || [];
+    $k("kc-what").textContent = (has.length ? "It includes " + and(has) + "." : "") + (dl.length ? ` ${and(dl)} downloads by itself.` : "");
+    const sets = [has.length ? "sets up " + and(has) : "", dl.length ? "downloads " + and(dl) : ""].filter(Boolean);
+    document.querySelectorAll(".kc-sets").forEach((e) => e.textContent = sets.length ? ": it " + sets.join(" and ") : "");
     $k("kc-show").textContent = k;
     view("kc-ok");
   };
@@ -532,6 +572,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     if (d && !d.ok) { err.textContent = d.error; err.hidden = false; $k("kc-key").value = k; view("kc-form"); return; }
     keep(k);
     shown(k, d);  // offline: kept anyway, and checked when the app adds it
+    $k("key-card").scrollIntoView({ behavior: "smooth", block: "start" });
   }
   $k("kc-open").onclick = () => { view("kc-form"); $k("kc-key").focus(); };
   $k("kc-skip").onclick = () => view("kc-closed");
@@ -540,7 +581,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   const invited = /(?:^#|&)key=([0-9A-Za-z-]{20,40})/.exec(location.hash);
   if (invited) {
     history.replaceState(null, "", location.pathname + location.search + "#download");
-    addKey(invited[1]).then(() => document.getElementById("download").scrollIntoView());
+    addKey(invited[1]);
   } else if (stored()) {
     check(stored()).then((d) => d.ok ? shown(stored(), d) : (keep(""), view("kc-closed"))).catch(() => shown(stored(), null));
   }
