@@ -301,7 +301,7 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
       <h1>Share the AI models on your computer <span>with your team.</span></h1>
       <p class="lead">A private, secure address for everyone you choose. LLM Gateway installs and sets everything up for you.</p>
       <div class="ctas">
-        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Download</span></a>
+        <a class="btn primary" id="hero-btn" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hero-label">Add your access key</span></a>
         <a class="btn" href="#setup">How it works</a>
       </div>
       <div class="meta" id="hero-meta">Windows and Mac · <span class="ver">latest version</span></div>
@@ -357,39 +357,22 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   <section id="download">
     <p class="label">Get LLM Gateway</p>
     <h2>For Windows and Mac</h2>
-    <p class="lead-h">No account or sign-up. It's tested and improved all the time: new versions show up in the app when they're ready.</p>
-    <div id="dl-grid">
-      <div class="grid">
-        <div class="card dl" id="dl-win">
-          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zm0 13 7.5 1v-7H3zM11.5 4.3 21 3v8.5h-9.5zm0 15.4L21 21v-8.5h-9.5z"/></svg>Windows <span class="mine-tag">Your computer</span></h3>
-          <p class="req">Windows 10 or 11, 64-bit. An NVIDIA graphics card is best.</p>
-          <a class="btn" id="btn-win" href="https://orionsoft.cc/get/llm-gateway/windows" rel="nofollow">Download for Windows</a>
-          <div class="meta">LLM-Gateway.exe · <span class="ver">latest</span></div>
-        </div>
-        <div class="card dl" id="dl-mac">
-          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>Mac <span class="mine-tag">Your computer</span></h3>
-          <p class="req">Apple silicon (M1 or newer), macOS 13 or newer, 16 GB memory or more.</p>
-          <a class="btn" id="btn-mac" href="https://orionsoft.cc/get/llm-gateway/mac" rel="nofollow">Download for Mac</a>
-          <div class="meta">LLM-Gateway-Mac.zip · <span class="ver">latest</span></div>
-        </div>
-      </div>
-    </div>
+    <p class="lead-h">For people who've been given access. Enter the access key you were sent, or open your invite link: the download and the steps for your computer show up here. It's tested and improved all the time, and new versions show up in the app when they're ready.</p>
     <div class="card key-card" id="key-card">
-      <div id="kc-closed"><b>Have an access key?</b> <button class="linkbtn" type="button" id="kc-open">Add it</button>
-        <span class="kc-note">It unlocks what your organisation set up for you. No key? Just download: you can add one later.</span></div>
-      <form id="kc-form" hidden autocomplete="off">
+      <form id="kc-form" autocomplete="off">
         <label for="kc-key"><b>Your access key</b></label>
         <div class="kc-row"><input id="kc-key" placeholder="XXXXX-XXXXX-XXXXX-XXXXX" maxlength="29" spellcheck="false" aria-describedby="kc-err">
-          <button class="btn small primary" id="kc-add">Add key</button><button class="btn small" type="button" id="kc-skip">Skip</button></div>
+          <button class="btn small primary" id="kc-add">Continue</button></div>
         <p class="kc-err" id="kc-err" role="alert" hidden></p>
       </form>
       <div id="kc-ok" hidden>
         <div class="kc-head" role="status"><span class="kc-tick" aria-hidden="true">✓</span>
           <div><b>Your access is ready.</b> <span id="kc-what"></span>
             <span class="kc-note">Download LLM Gateway and open it on this computer: it starts with your access already in.</span></div></div>
-        <div class="kc-btns">
-          <a class="btn" id="kc-win" rel="nofollow" href="https://orionsoft.cc/get/llm-gateway/windows">Download for Windows</a>
-          <a class="btn" id="kc-mac" rel="nofollow" href="https://orionsoft.cc/get/llm-gateway/mac">Download for Mac</a>
+        <p class="kc-err" id="kc-nodl" hidden>Couldn't get your download just now. Reload the page to try again.</p>
+        <div class="kc-btns" id="kc-btns">
+          <a class="btn" id="kc-win" rel="nofollow" href="#download">Download for Windows</a>
+          <a class="btn" id="kc-mac" rel="nofollow" href="#download">Download for Mac</a>
         </div>
         <div class="kc-ok-steps">
           <div class="seg" role="tablist">
@@ -490,9 +473,6 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   // Highlight the visitor's own system, and point the main button at its download
   const ua = navigator.userAgent, plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
   const mine = /Mac/i.test(plat) || /Macintosh/.test(ua) ? "mac" : /Win/i.test(plat) || /Windows/.test(ua) ? "win" : null;
-  if (mine) {
-    document.getElementById("dl-" + mine).classList.add("mine");
-  }
 
   // Hero: a gently wandering tokens/s readout; everything holds still for reduced-motion users
   const art = document.querySelector(".art svg"), tps = document.getElementById("tps");
@@ -526,30 +506,23 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   tabs.mac.onclick = () => show("mac");
   if (mine) show(mine);
 
-  // Downloads come from orionsoft.cc (counted there); on this computer, the main button starts its own download
-  const API = /^(localhost|127\.)/.test(location.hostname) ? "http://localhost:8790" : "https://orionsoft.cc";
-  for (const [id, os] of [["btn-win", "windows"], ["btn-mac", "mac"]]) document.getElementById(id).href = API + "/get/llm-gateway/" + os;
-  if (mine) {
-    document.getElementById("hero-btn").href = document.getElementById("btn-" + mine).href;
-    document.getElementById("hero-label").textContent = mine === "mac" ? "Download for Mac" : "Download for Windows";
-  }
 
   // An access key: added here, or filled in by an invite link (#key=…, never sent to a server). It's kept in this
   // browser, and LLM Gateway's first start (welcome.html) hands it to the app.
+  // Orion Control: checks the key and hands out its download links
+  const API = /^(localhost|127\.)/.test(location.hostname) ? "http://localhost:8790" : "https://orionsoft.cc";
   const KEY_STORE = "llmgw-access-key", $k = (id) => document.getElementById(id);
   const tidy = (k) => String(k || "").toUpperCase().replace(/[^0-9A-Z]/g, "").replace(/(.{5})(?=.)/g, "$1-");
   const stored = () => { try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; } };
   const keep = (k) => { try { k ? localStorage.setItem(KEY_STORE, k) : localStorage.removeItem(KEY_STORE); } catch (e) {} };
   const view = (which) => {
-    for (const id of ["kc-closed", "kc-form", "kc-ok"]) $k(id).hidden = id !== which;
-    $k("dl-grid").hidden = $k("setup").hidden = which === "kc-ok";  // the key card has its own download buttons and steps
+    for (const id of ["kc-form", "kc-ok"]) $k(id).hidden = id !== which;
+    $k("setup").hidden = which === "kc-ok";  // the key card has its own steps
   };
   const and = (xs) => xs.length > 1 ? xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1] : xs[0] || "";
   const kcTab = (os) => { for (const o of ["win", "mac"]) { $k("kct-" + o).setAttribute("aria-selected", o === os); $k("kcs-" + o).hidden = o !== os; } };
   $k("kct-win").onclick = () => kcTab("win");
   $k("kct-mac").onclick = () => kcTab("mac");
-  $k("kc-win").href = API + "/get/llm-gateway/windows";
-  $k("kc-mac").href = API + "/get/llm-gateway/mac";
   if (mine) { $k("kc-" + mine).classList.add("primary"); kcTab(mine); } else $k("kc-win").classList.add("primary");
   const shown = (k, d) => {
     const has = (d && d.unlocks) || [], dl = (d && d.downloads) || [];
@@ -557,6 +530,12 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     const sets = [has.length ? "sets up " + and(has) : "", dl.length ? "downloads " + and(dl) : ""].filter(Boolean);
     document.querySelectorAll(".kc-sets").forEach((e) => e.textContent = sets.length ? ": it " + sets.join(" and ") : "");
     $k("kc-show").textContent = k;
+    // the downloads: links good for a day, handed out for this key
+    const files = (d && d.files) || {};
+    if (files.windows) $k("kc-win").href = files.windows;
+    if (files.mac) $k("kc-mac").href = files.mac;
+    $k("kc-btns").hidden = !(files.windows || files.mac);
+    $k("kc-nodl").hidden = !$k("kc-btns").hidden;
     view("kc-ok");
   };
   async function check(k) {
@@ -574,16 +553,14 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
     shown(k, d);  // offline: kept anyway, and checked when the app adds it
     $k("key-card").scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  $k("kc-open").onclick = () => { view("kc-form"); $k("kc-key").focus(); };
-  $k("kc-skip").onclick = () => view("kc-closed");
   $k("kc-form").onsubmit = (e) => { e.preventDefault(); addKey($k("kc-key").value); };
-  $k("kc-remove").onclick = () => { keep(""); $k("kc-key").value = ""; view("kc-closed"); };
+  $k("kc-remove").onclick = () => { keep(""); $k("kc-key").value = ""; view("kc-form"); };
   const invited = /(?:^#|&)key=([0-9A-Za-z-]{20,40})/.exec(location.hash);
   if (invited) {
     history.replaceState(null, "", location.pathname + location.search + "#download");
     addKey(invited[1]);
   } else if (stored()) {
-    check(stored()).then((d) => d.ok ? shown(stored(), d) : (keep(""), view("kc-closed"))).catch(() => shown(stored(), null));
+    check(stored()).then((d) => d.ok ? shown(stored(), d) : (keep(""), view("kc-form"))).catch(() => shown(stored(), null));
   }
 
   // Current version from the public release
