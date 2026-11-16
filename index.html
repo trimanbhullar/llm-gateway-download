@@ -513,7 +513,9 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   const shown = (k, d) => {
     const parts = [...(d && d.unlocks || [])];
     if (d && d.theme) parts.push(d.theme.replace(/(^|-)(\w)/g, (m, a, b) => (a ? " " : "") + b.toUpperCase()) + " branding");
-    $k("kc-what").textContent = parts.length ? "It unlocks " + parts.join(" and ") + "." : "";
+    const dl = (d && d.downloads) || [];
+    $k("kc-what").textContent = (parts.length ? "It unlocks " + parts.join(" and ") : "")
+      + (dl.length ? (parts.length ? ", and sets up " : "It sets up ") + dl.join(" and ") + " by itself" : "") + (parts.length || dl.length ? "." : "");
     $k("kc-show").textContent = k;
     view("kc-ok");
   };
