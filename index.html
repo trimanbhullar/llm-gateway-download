@@ -157,6 +157,20 @@ h2 { font: 600 28px/1.2 var(--body); letter-spacing: -.02em; margin: 0 0 20px; }
 .ts b { color: var(--text-2); font-weight: 600; transition: color .2s; }
 .ts:hover, .ts:focus-visible, .ts:hover .ts-mark, .ts:focus-visible .ts-mark, .ts:hover b, .ts:focus-visible b { color: var(--text); }  /* the whole badge lights up together */
 .hero .ts { margin-top: 14px; }
+.key-card { margin-top: 16px; padding: 16px 20px; font-size: 14px; color: var(--text-2); }
+.key-card b { color: var(--text); }
+.kc-note { display: block; margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.linkbtn { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.kc-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.kc-row input { flex: 1 1 240px; max-width: 320px; min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text); font: 14px var(--mono); text-transform: uppercase; }
+.kc-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn.small { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.kc-err { margin: 8px 0 0; color: #e5675c; font-size: 13px; }
+#kc-ok { display: flex; gap: 12px; align-items: flex-start; }
+#kc-ok[hidden] { display: none; }
+.kc-tick { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--good); color: #fff; font-weight: 700; }
+#kc-ok code { font: 12.5px var(--mono); color: var(--text); }
 .tm { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }
 .od-credits { margin-top: 16px; text-align: left; font-size: 12.5px; color: #a8a8af; opacity: 0; animation: od-rise .6s 1.2s ease forwards; }
 .od-credits h3 { margin: 0 0 6px; font: 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #84848b; }
@@ -353,6 +367,20 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
         </div>
       </div>
     </div>
+    <div class="card key-card" id="key-card">
+      <div id="kc-closed"><b>Have an access key?</b> <button class="linkbtn" type="button" id="kc-open">Add it</button>
+        <span class="kc-note">It unlocks plugins, and your organisation's look if it has one. No key? Just download: you can add one later.</span></div>
+      <form id="kc-form" hidden autocomplete="off">
+        <label for="kc-key"><b>Your access key</b></label>
+        <div class="kc-row"><input id="kc-key" placeholder="XXXXX-XXXXX-XXXXX-XXXXX" maxlength="29" spellcheck="false" aria-describedby="kc-err">
+          <button class="btn small primary" id="kc-add">Add key</button><button class="btn small" type="button" id="kc-skip">Skip</button></div>
+        <p class="kc-err" id="kc-err" role="alert" hidden></p>
+      </form>
+      <div id="kc-ok" hidden role="status"><span class="kc-tick" aria-hidden="true">✓</span>
+        <div><b>Access key added.</b> <span id="kc-what"></span>
+          <p class="kc-note">Download LLM Gateway above and open it on this computer: it sets itself up with your access. Using another computer? Paste the key in its Settings instead: <code id="kc-show"></code></p>
+          <button class="linkbtn" type="button" id="kc-remove">Remove the key</button></div></div>
+    </div>
     <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
   </section>
 
@@ -473,6 +501,46 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
   if (mine) {
     document.getElementById("hero-btn").href = document.getElementById("btn-" + mine).href;
     document.getElementById("hero-label").textContent = mine === "mac" ? "Download free for Mac" : "Download free for Windows";
+  }
+
+  // An access key: added here, or filled in by an invite link (#key=…, never sent to a server). It's kept in this
+  // browser, and LLM Gateway's first start (welcome.html) hands it to the app.
+  const KEY_STORE = "llmgw-access-key", $k = (id) => document.getElementById(id);
+  const tidy = (k) => String(k || "").toUpperCase().replace(/[^0-9A-Z]/g, "").replace(/(.{5})(?=.)/g, "$1-");
+  const stored = () => { try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; } };
+  const keep = (k) => { try { k ? localStorage.setItem(KEY_STORE, k) : localStorage.removeItem(KEY_STORE); } catch (e) {} };
+  const view = (which) => { for (const id of ["kc-closed", "kc-form", "kc-ok"]) $k(id).hidden = id !== which; };
+  const shown = (k, d) => {
+    const parts = [...(d && d.unlocks || [])];
+    if (d && d.theme) parts.push(d.theme.replace(/(^|-)(\w)/g, (m, a, b) => (a ? " " : "") + b.toUpperCase()) + " branding");
+    $k("kc-what").textContent = parts.length ? "It unlocks " + parts.join(" and ") + "." : "";
+    $k("kc-show").textContent = k;
+    view("kc-ok");
+  };
+  async function check(k) {
+    const r = await fetch(API + "/api/app/key", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ product: "llm-gateway", key: k }) });
+    return r.json();
+  }
+  async function addKey(raw) {
+    const k = tidy(raw), err = $k("kc-err");
+    err.hidden = true;
+    if (!/^[2-9A-HJ-NP-Z]{5}(-[2-9A-HJ-NP-Z]{5}){3}$/.test(k)) { err.textContent = "That isn't an access key. It looks like XXXXX-XXXXX-XXXXX-XXXXX."; err.hidden = false; view("kc-form"); return; }
+    let d;
+    try { d = await check(k); } catch (e) { d = null; }
+    if (d && !d.ok) { err.textContent = d.error; err.hidden = false; $k("kc-key").value = k; view("kc-form"); return; }
+    keep(k);
+    shown(k, d);  // offline: kept anyway, and checked when the app adds it
+  }
+  $k("kc-open").onclick = () => { view("kc-form"); $k("kc-key").focus(); };
+  $k("kc-skip").onclick = () => view("kc-closed");
+  $k("kc-form").onsubmit = (e) => { e.preventDefault(); addKey($k("kc-key").value); };
+  $k("kc-remove").onclick = () => { keep(""); $k("kc-key").value = ""; view("kc-closed"); };
+  const invited = /(?:^#|&)key=([0-9A-Za-z-]{20,40})/.exec(location.hash);
+  if (invited) {
+    history.replaceState(null, "", location.pathname + location.search + "#download");
+    addKey(invited[1]).then(() => document.getElementById("download").scrollIntoView());
+  } else if (stored()) {
+    check(stored()).then((d) => d.ok ? shown(stored(), d) : (keep(""), view("kc-closed"))).catch(() => shown(stored(), null));
   }
 
   // Current version from the public release
