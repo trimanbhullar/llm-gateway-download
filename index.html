@@ -383,19 +383,19 @@ code { font: 13px var(--mono); background: var(--surface-2); border: 1px solid v
             <li><span><b>Double-click LLM-Gateway.exe.</b> Put it anywhere first: it keeps its settings in a folder next to itself.</span></li>
             <li><span>If Windows shows <b>“Windows protected your PC”</b>, click <b>More info</b>, then <b>Run anyway</b>.</span></li>
             <li><span>It opens in your browser with your access in, and installs what it needs by itself<span class="kc-sets"></span>. Click <b>Yes</b> if Windows asks for permission.</span></li>
-            <li><span><b>Sign in to Tailscale</b> when it asks (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). That's it.</span></li>
+            <li><span><b>Sign in to Tailscale</b> when it asks (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). That's it. Can't install Tailscale on this computer? Click <b>No Tailscale? Use a Cloudflare address</b> to share it another way, or <b>Skip: use on this computer only</b>.</span></li>
           </ol>
           <ol class="steps" id="kcs-mac" role="tabpanel" hidden>
             <li><span><b>Unzip it and drag LLM Gateway into Applications.</b></span></li>
             <li><span>The first time only: <b>right-click</b> the app, choose <b>Open</b>, then <b>Open</b> again. If macOS still blocks it, go to <b>System Settings › Privacy &amp; Security</b> and click <b>Open Anyway</b>.</span></li>
             <li><span>It opens in your browser with your access in, and installs what it needs by itself<span class="kc-sets"></span>. It lives in the menu bar at the top of the screen.</span></li>
-            <li><span>For <b>Tailscale</b> it opens the download page: install it, open it once, allow its VPN setting and sign in (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). Setup carries on by itself.</span></li>
+            <li><span>For <b>Tailscale</b> it opens the download page: install it, open it once, allow its VPN setting and sign in (<a href="https://login.tailscale.com/start" target="_blank" rel="noopener">create an account</a> if you don't have one). Setup carries on by itself. Can't install Tailscale on this computer? Click <b>No Tailscale? Use a Cloudflare address</b> to share it another way, or <b>Skip: use on this computer only</b>.</span></li>
           </ol>
         </div>
         <p class="kc-note kc-foot">Using another computer? Paste the key in LLM Gateway's Settings there: <code id="kc-show"></code> · <button class="linkbtn" type="button" id="kc-remove">Remove the key</button></p>
       </div>
     </div>
-    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so you need your own Tailscale account to use it.</p>
+    <p class="tm">LLM Gateway's secure address runs on <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>, so sharing it that way needs your own Tailscale account. Where Tailscale can't be installed, it can share through a Cloudflare address instead, or work on one computer only.</p>
   </section>
 
   <section id="setup">
