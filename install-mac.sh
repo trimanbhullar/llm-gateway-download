@@ -35,6 +35,9 @@ if ! wait_up 40; then
   log="$HOME/Library/Logs/LLM-Gateway-start.log"
   mkdir -p "$(dirname "$log")"
   pkill -f "$APP/Contents/MacOS/" 2>/dev/null; sleep 1
+  # from now on the app starts without its menu-bar icon here, however it's opened
+  mkdir -p "$HOME/Library/Application Support/LLM-Gateway"
+  touch "$HOME/Library/Application Support/LLM-Gateway/.no-tray"
   nohup "$dest/$APP/Contents/MacOS/LLM Gateway" --no-tray >"$log" 2>&1 &
   if ! wait_up 40; then
     say "LLM Gateway didn't start on this Mac. Please send this to whoever sent you the link:"
