@@ -1,0 +1,46 @@
+# Builds the Mac app (LLM-Gateway-Mac.zip) on GitHub's Mac machines, which are free for a public repository.
+# The app's code stays in the private repository: this reads it at one release tag with a read-only deploy key
+# (secret PRIVATE_REPO_KEY), builds, and puts the zip on a hidden draft release that release.ps1 picks up and deletes.
+# Started only by the owner (release.ps1): gh workflow run build-mac.yml -f tag=v1.2.3
+name: Build Mac app
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag: { description: "Version tag, for example v1.2.3", required: true }
+
+permissions:
+  contents: write
+
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - name: Check the tag
+        run: '[[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Not a version tag: $TAG"; exit 1; }'
+      - uses: actions/checkout@v4
+        with:
+          repository: trimanbhullar/llm-gateway
+          ref: ${{ inputs.tag }}
+          ssh-key: ${{ secrets.PRIVATE_REPO_KEY }}
+          persist-credentials: false
+          path: src
+      - uses: astral-sh/setup-uv@v6
+      - name: Build LLM Gateway.app (public edition)
+        working-directory: src
+        env:
+          ORION_USE_EXISTING_MARK: "1"
+        run: |
+          bash build-mac.sh > ../build.log 2>&1 || { tail -40 ../build.log; exit 1; }
+          tail -3 ../build.log
+          mv dist-mac/LLM-Gateway-[0-9]*-mac-*.zip ../LLM-Gateway-Mac.zip
+          shasum -a 256 ../LLM-Gateway-Mac.zip
+      - name: Put it on a hidden draft release
+        run: |
+          gh release delete "build-$TAG" --repo "$GITHUB_REPOSITORY" --yes 2>/dev/null || true
+          gh release create "build-$TAG" LLM-Gateway-Mac.zip --repo "$GITHUB_REPOSITORY" --draft \
+            --title "build $TAG (draft, picked up by release.ps1)" --notes "Temporary."
