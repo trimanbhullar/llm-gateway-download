@@ -30,6 +30,11 @@ jobs:
           persist-credentials: false
           path: src
       - uses: astral-sh/setup-uv@v6
+      # Go builds Tailscale's own command line into the Mac app (build-mac.sh); GitHub's Mac machines don't have it
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
       - name: Build LLM Gateway.app (public edition)
         working-directory: src
         env:
