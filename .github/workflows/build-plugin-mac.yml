@@ -1,0 +1,50 @@
+# Builds the ICD10 Coder plugin for Apple-silicon Macs (icd10coder-mac.zip) on GitHub's Mac machines, which are free for
+# a public repository. The plugin's code stays in its private repository: this reads it at one commit or tag with a
+# read-only deploy key (secret PLUGIN_REPO_KEY), builds, checks it starts (packaging/smoke.py), and puts the zip on a
+# hidden draft release that the owner picks up, signs and publishes on the plugin's own release, then deletes.
+# Started only by the owner: gh workflow run build-plugin-mac.yml -f ref=<commit or tag> -f version=1.2.3
+name: Build Mac plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref: { description: "The plugin's commit or tag to build", required: true }
+      version: { description: "plugin.json's version at that commit, for example 1.0.5", required: true }
+
+permissions:
+  contents: write
+
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ inputs.version }}
+    steps:
+      - name: Check the version
+        run: '[[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Not a version: $VERSION"; exit 1; }'
+      - uses: actions/checkout@v4
+        with:
+          repository: trimanbhullar/icd10-coder
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.PLUGIN_REPO_KEY }}
+          persist-credentials: false
+          path: src
+      - uses: astral-sh/setup-uv@v6
+      - name: Build icd10coder-mac.zip
+        working-directory: src
+        env:
+          TAG: v${{ inputs.version }}  # build.py refuses a tag that isn't plugin.json's version
+        run: |
+          uv run --python 3.12 --frozen --no-dev --group build python packaging/build.py > ../build.log 2>&1 || { tail -40 ../build.log; exit 1; }
+          tail -2 ../build.log
+          shasum -a 256 dist/icd10coder-mac.zip
+      - name: Check it starts
+        working-directory: src
+        run: uv run --python 3.12 --frozen --no-dev python packaging/smoke.py dist/icd10coder-mac.zip
+      - name: Put it on a hidden draft release
+        run: |
+          gh release delete "plugin-icd10-$VERSION" --repo "$GITHUB_REPOSITORY" --yes 2>/dev/null || true
+          gh release create "plugin-icd10-$VERSION" src/dist/icd10coder-mac.zip --repo "$GITHUB_REPOSITORY" --draft \
+            --title "ICD10 Coder $VERSION Mac build (draft, picked up by hand)" --notes "Temporary."
